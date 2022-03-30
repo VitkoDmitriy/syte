@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package com.syte.protobuf;
+
+option java_multiple_files = true;
+
+message Todos {
+  repeated ToDoProto toDoProto = 1;
+}
+
+message ToDoProto {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  string todoDate = 4;
+  bool isComplete = 5;
+  string creationDate = 6;
+  string  updateDate = 7;
+}
+
+message CreateToDoProto {
+  string title = 2;
+  string description = 3;
+  string todoDate = 4;
+  optional bool isComplete = 5;
+}
+
+message EmptyToDoProto {
+}
+
+message GetToDoByIdRequest {
+  int32 id = 1;
+}
+
+message DeleteToDoResponse {
+  bool deleted = 1;
+}
+
+service ToDoProtoService{
+  rpc getToDoById(GetToDoByIdRequest) returns (ToDoProto);
+  rpc getAllToDo(EmptyToDoProto) returns (Todos);
+  rpc setToDoIsDone(GetToDoByIdRequest) returns (ToDoProto);
+  rpc createToDo(CreateToDoProto) returns (ToDoProto);
+  rpc updateToDo(ToDoProto) returns (ToDoProto);
+  rpc deleteToDo(GetToDoByIdRequest) returns (DeleteToDoResponse);
+}
